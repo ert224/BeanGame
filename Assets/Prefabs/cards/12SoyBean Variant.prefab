@@ -1,0 +1,135 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7661521789647263574
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 88126775207513732, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_text
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2794643004166730405, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_text
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4291253212769040881, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 41
+      objectReference: {fileID: 0}
+    - target: {fileID: 4291253212769040881, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4447642800843525363, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
+      objectReference: {fileID: 0}
+    - target: {fileID: 4484905790265475376, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_Color.b
+      value: 0.87843144
+      objectReference: {fileID: 0}
+    - target: {fileID: 4484905790265475376, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6509804
+      objectReference: {fileID: 0}
+    - target: {fileID: 4484905790265475376, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4791273588863201180, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f66683254015a884bb91d8f4f45aeac3, type: 3}
+    - target: {fileID: 5489542867469033520, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489542867469033520, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489542867469033520, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489542867469033520, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489542867469033520, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489542867469033520, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489542867469033520, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489542867469033520, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489542867469033520, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489542867469033520, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489542867469033520, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7771397122568213391, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_text
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7771397122568213391, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.12156862
+      objectReference: {fileID: 0}
+    - target: {fileID: 7771397122568213391, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.44705883
+      objectReference: {fileID: 0}
+    - target: {fileID: 7771397122568213391, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.4317894
+      objectReference: {fileID: 0}
+    - target: {fileID: 7771397122568213391, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280250990
+      objectReference: {fileID: 0}
+    - target: {fileID: 8127874378930341525, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_Name
+      value: 12SoyBean Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8464212846334802893, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_text
+      value: Soy Bean
+      objectReference: {fileID: 0}
+    - target: {fileID: 8464212846334802893, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.12156863
+      objectReference: {fileID: 0}
+    - target: {fileID: 8464212846334802893, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.44705883
+      objectReference: {fileID: 0}
+    - target: {fileID: 8464212846334802893, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.43529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 8464212846334802893, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4280250991
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 37f79947dc2115347b776c63915f7754, type: 3}

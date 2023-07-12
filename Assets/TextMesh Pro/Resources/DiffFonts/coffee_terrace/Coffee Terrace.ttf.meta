@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: fef072a6d2922824cad65e2dbf5635e4
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Coffee Terrace
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: f34ac3a422e2b4245a3e7491cce574b2, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
