@@ -17,11 +17,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1588074163099987588, guid: 8a9ea82b5ce069d4baa648e2ff6f2338, type: 3}
       propertyPath: m_SortingOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2159801174263925590, guid: 8a9ea82b5ce069d4baa648e2ff6f2338, type: 3}
       propertyPath: m_SortingOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2561104529071275566, guid: 8a9ea82b5ce069d4baa648e2ff6f2338, type: 3}
       propertyPath: m_SortingOrder
@@ -29,7 +29,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3639390920238600782, guid: 8a9ea82b5ce069d4baa648e2ff6f2338, type: 3}
       propertyPath: m_SortingOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4176443955666633026, guid: 8a9ea82b5ce069d4baa648e2ff6f2338, type: 3}
       propertyPath: m_Color.b

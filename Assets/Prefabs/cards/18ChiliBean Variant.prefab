@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1007984406724562562, guid: 61c757a8163f9a34799e2e11f95122a3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1114491576282006139, guid: 61c757a8163f9a34799e2e11f95122a3, type: 3}
       propertyPath: m_text
       value: '3
@@ -41,9 +45,25 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.8941177
       objectReference: {fileID: 0}
+    - target: {fileID: 2086992124762792674, guid: 61c757a8163f9a34799e2e11f95122a3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2920302864975199834, guid: 61c757a8163f9a34799e2e11f95122a3, type: 3}
       propertyPath: m_text
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3715167585980234746, guid: 61c757a8163f9a34799e2e11f95122a3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4070747790963138088, guid: 61c757a8163f9a34799e2e11f95122a3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4755171246058740635, guid: 61c757a8163f9a34799e2e11f95122a3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4784623445134336849, guid: 61c757a8163f9a34799e2e11f95122a3, type: 3}
       propertyPath: m_text
@@ -164,6 +184,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 5a52e736bdb417b4d997ab0f79cd95bf, type: 3}
     - target: {fileID: 8572302187287787124, guid: 61c757a8163f9a34799e2e11f95122a3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074815113159651063, guid: 61c757a8163f9a34799e2e11f95122a3, type: 3}
       propertyPath: m_SortingOrder
       value: 4
       objectReference: {fileID: 0}
