@@ -74,7 +74,7 @@ public class CardsData : MonoBehaviour
         if (cardsList.Count == 0)
         {
             Debug.LogError("No cards left in the deck.");
-            //return null;
+            return new CardsTemplate(null,-1,null);
         }
         
         CardsTemplate topCard = cardsList[0];
