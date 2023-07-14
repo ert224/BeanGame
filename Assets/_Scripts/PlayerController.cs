@@ -10,72 +10,20 @@ public class PlayerController : NetworkBehaviour
     private Camera _mainCamera;
 
     private StartNetwork startNetwork;
-    private CardsData beanDeck;
+  
     [SerializeField] private GameObject backSidePrefab;
-    private PlayerHand _playerHand;
 
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
         Initialize();
-        if (IsServer)
-        {
-            beanDeck = gameObject.AddComponent<CardsData>();
-            beanDeck.CreateNewCards();
-            beanDeck.printCardDeck();
-            InstantiateDeck();
-        }
         startNetwork = FindObjectOfType<StartNetwork>();
         SetSpawnTransform();
-
-        //if (startNetwork.getCount() >= 1)
-        //{
-        //    InstantiateDeck();
-        //}
-    }
-
-    private GameObject spawnDeck;
-    public void InstantiateDeck()
-    {
-        Vector3 location = new Vector3(0f, 0f, 0f);
-        Quaternion turnDeck = Quaternion.Euler(0f, 0f, 90f);
-       Instantiate(backSidePrefab, location, turnDeck);
-        _playerHand = GetComponent<PlayerHand>();
     }
 
     private void Initialize()
     {
         _mainCamera = Camera.main;
-    }
-
-    private void Update()
-    {
-        Debug.Log("In Update");
-        if (!IsOwner) return;
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
-            {
-                Debug.Log("Hit: " + hit.transform.gameObject.name);
-                if (hit.transform.gameObject.tag == "BackSideCard") // Ensure your backside card prefab has this tag
-                {
-                    AssignCardToPlayer();
-                }
-            }
-        }
-    }
-
-    private void AssignCardToPlayer()
-    {
-        // Assuming CardsData has a method Pop that removes a card from the deck
-        CardsTemplate cardPop = beanDeck.Pop();
-        Debug.Log("pooped");
-        Debug.Log(cardPop.GetCardType());
-        // Assign this card to the player
-        // You will need a suitable method or property to do this
     }
 
     private void SetSpawnTransform()
