@@ -99,6 +99,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 18ChiliBean Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6445754432376501835, guid: 61c757a8163f9a34799e2e11f95122a3, type: 3}
+      propertyPath: m_TagString
+      value: 18ChiliTag
+      objectReference: {fileID: 0}
     - target: {fileID: 6685881252689627923, guid: 61c757a8163f9a34799e2e11f95122a3, type: 3}
       propertyPath: m_text
       value: Chili Bean

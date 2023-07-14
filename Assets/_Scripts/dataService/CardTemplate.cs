@@ -4,14 +4,15 @@ using UnityEngine;
 public struct CardsTemplate
 {
     public string type;
-    public int value;
+    public int total;
     public GameObject prefab;
-
-    public CardsTemplate(string type, int value, GameObject prefab)
+    public ushort value;
+    public CardsTemplate(string type, int total, GameObject prefab, ushort value)
     {
         this.type = type;
-        this.value = value;
+        this.total = total;
         this.prefab = prefab;
+        this.value = value;
     }
 
     public string GetCardType()
@@ -19,13 +20,17 @@ public struct CardsTemplate
         return this.type;
     }
 
-    public int GetValue()
+    public int GetTotal()
     {
-        return this.value;
+        return this.total;
     }
 
     public GameObject GetPrefab()
     {
         return this.prefab;
+    }
+    public ushort GetValue()
+    {
+        return this.value;
     }
 }

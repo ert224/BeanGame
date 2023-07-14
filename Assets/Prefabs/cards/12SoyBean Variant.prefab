@@ -123,6 +123,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 12SoyBean Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 8127874378930341525, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+      propertyPath: m_TagString
+      value: 12SoyTag
+      objectReference: {fileID: 0}
     - target: {fileID: 8464212846334802893, guid: 37f79947dc2115347b776c63915f7754, type: 3}
       propertyPath: m_text
       value: Soy Bean

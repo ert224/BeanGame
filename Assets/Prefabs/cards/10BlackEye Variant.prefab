@@ -83,6 +83,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6805774356388498083, guid: 8189c9b3664c9e64bac991e1dd8f97dd, type: 3}
+      propertyPath: m_TagString
+      value: 10BlackEyedTag
+      objectReference: {fileID: 0}
     - target: {fileID: 7102232961933569030, guid: 8189c9b3664c9e64bac991e1dd8f97dd, type: 3}
       propertyPath: m_RootOrder
       value: 0

@@ -18,9 +18,7 @@ public class SpawnCard : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        _targetPosition = followTransform.position - followTransform.forward * distance;
-        _targetPosition += (transform.position - _targetPosition) * delayTime;
-        _targetPosition.z = 0f;
+        _targetPosition = new Vector3(-60f,-60f,0f);
         transform.position = Vector3.Lerp(transform.position, _targetPosition, Time.deltaTime * moveStep);
     }
 }

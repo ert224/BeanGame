@@ -26,5 +26,7 @@ public class InputClick : NetworkBehaviour
 
         Debug.Log("ray hit collider");
         Debug.Log(rayHit.collider.gameObject.name);
+
     }
+
 }

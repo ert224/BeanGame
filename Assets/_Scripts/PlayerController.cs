@@ -12,7 +12,7 @@ public class PlayerController : NetworkBehaviour
     private StartNetwork startNetwork;
   
     [SerializeField] private GameObject backSidePrefab;
-
+    private ServerController _serverDeck;
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
@@ -24,6 +24,11 @@ public class PlayerController : NetworkBehaviour
     private void Initialize()
     {
         _mainCamera = Camera.main;
+        _serverDeck = GetComponent<ServerController>();
+        if (_serverDeck != null)
+        {
+            Debug.Log("Deck NOt found");
+        }
     }
 
     private void SetSpawnTransform()

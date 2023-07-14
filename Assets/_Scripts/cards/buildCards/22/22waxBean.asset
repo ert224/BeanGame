@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: 22waxBean
+  m_EditorClassIdentifier: Assembly-CSharp::CardsScriptableObject
+  cardName: waxBean
+  cardObj: {fileID: 6805774356388498083, guid: 8189c9b3664c9e64bac991e1dd8f97dd, type: 3}
+  cardvalue: 1
+  tradeVal1: 0
+  tradeVal2: 0
+  tradeVal3: 0
+  tradeVal4: 0

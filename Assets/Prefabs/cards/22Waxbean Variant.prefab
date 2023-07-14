@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 22Waxbean Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 600295736721093053, guid: 1ee2d43f8aba93440890cce43dcc80d4, type: 3}
+      propertyPath: m_TagString
+      value: 22WaxTag
+      objectReference: {fileID: 0}
     - target: {fileID: 996927012290059591, guid: 1ee2d43f8aba93440890cce43dcc80d4, type: 3}
       propertyPath: m_text
       value: 4

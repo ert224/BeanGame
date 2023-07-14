@@ -1543,7 +1543,7 @@ GameObject:
   - component: {fileID: -6045481883555083754}
   m_Layer: 0
   m_Name: 24CoffeeBean
-  m_TagString: Untagged
+  m_TagString: 24CoffeeTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

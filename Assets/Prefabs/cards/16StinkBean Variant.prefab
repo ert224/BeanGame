@@ -77,6 +77,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 16StinkBean Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5924056324361044861, guid: 09fb3f9ef78f412488a82311d7d13816, type: 3}
+      propertyPath: m_TagString
+      value: 16StinkTag
+      objectReference: {fileID: 0}
     - target: {fileID: 6308584051154583077, guid: 09fb3f9ef78f412488a82311d7d13816, type: 3}
       propertyPath: m_text
       value: Stink Bean

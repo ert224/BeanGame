@@ -35,6 +35,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 14GreenBean Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 1918308962813563331, guid: 7b908808cfe05a244b6439b96ba13b13, type: 3}
+      propertyPath: m_TagString
+      value: 14GreenTag
+      objectReference: {fileID: 0}
     - target: {fileID: 2242323989341420857, guid: 7b908808cfe05a244b6439b96ba13b13, type: 3}
       propertyPath: m_text
       value: 5

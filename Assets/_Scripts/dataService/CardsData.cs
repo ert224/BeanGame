@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class CardsData : MonoBehaviour
 {
-    [SerializeField] private GameObject prefab;
+    // [SerializeField] private GameObject prefab;
 
     private List<CardsTemplate> cardsList = new List<CardsTemplate>();
 
@@ -15,55 +15,55 @@ public class CardsData : MonoBehaviour
         // Add objects of type "coffee"
         for (int i = 0; i < 24; i++)
         {
-            cardsList.Add(new CardsTemplate("coffee", 24, prefab));
+            cardsList.Add(new CardsTemplate("coffee", 24, GameObject.FindGameObjectWithTag("24CoffeeTag"), 1));
         }
 
         // Add objects of type "wax"
         for (int i = 0; i < 22; i++)
         {
-            cardsList.Add(new CardsTemplate("wax", 22, prefab));
+            cardsList.Add(new CardsTemplate("wax", 22, GameObject.FindGameObjectWithTag("22WaxTag"), 1));
         }
 
         // Add objects of type "blue"
         for (int i = 0; i < 20; i++)
         {
-            cardsList.Add(new CardsTemplate("blue", 20, prefab));
+            cardsList.Add(new CardsTemplate("blue", 20, GameObject.FindGameObjectWithTag("20BlueTag"), 1));
         }
 
         // Add objects of type "chili"
         for (int i = 0; i < 18; i++)
         {
-            cardsList.Add(new CardsTemplate("chili", 18, prefab));
+            cardsList.Add(new CardsTemplate("chili", 18, GameObject.FindGameObjectWithTag("18ChiliTag"), 1));
         }
 
         // Add objects of type "stink"
         for (int i = 0; i < 16; i++)
         {
-            cardsList.Add(new CardsTemplate("stink", 16, prefab));
+            cardsList.Add(new CardsTemplate("stink", 16, GameObject.FindGameObjectWithTag("16StinkTag"), 1));
         }
 
         // Add objects of type "green"
         for (int i = 0; i < 14; i++)
         {
-            cardsList.Add(new CardsTemplate("green", 14, prefab));
+            cardsList.Add(new CardsTemplate("green", 14, GameObject.FindGameObjectWithTag("14GreenTag"), 1));
         }
 
         // Add objects of type "soy"
         for (int i = 0; i < 12; i++)
         {
-            cardsList.Add(new CardsTemplate("soy", 12, prefab));
+            cardsList.Add(new CardsTemplate("soy", 12, GameObject.FindGameObjectWithTag("12SoyTag"), 1));
         }
 
         // Add objects of type "black"
         for (int i = 0; i < 10; i++)
         {
-            cardsList.Add(new CardsTemplate("black", 10, prefab));
+            cardsList.Add(new CardsTemplate("black", 10, GameObject.FindGameObjectWithTag("10BlackEyedTag"), 1));
         }
 
         // Add objects of type "red"
         for (int i = 0; i < 8; i++)
         {
-            cardsList.Add(new CardsTemplate("red", 8, prefab));
+            cardsList.Add(new CardsTemplate("red", 8, GameObject.FindGameObjectWithTag("08RedTag"), 1));
         }
     }
 
@@ -74,9 +74,9 @@ public class CardsData : MonoBehaviour
         if (cardsList.Count == 0)
         {
             Debug.LogError("No cards left in the deck.");
-            return new CardsTemplate(null,-1,null);
+            return new CardsTemplate(null, -1, null,0);
         }
-        
+
         CardsTemplate topCard = cardsList[0];
         cardsList.RemoveAt(0);
         return topCard;

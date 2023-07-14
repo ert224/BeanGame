@@ -231,5 +231,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: 20BlueBean Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 8576015893919680231, guid: 8a9ea82b5ce069d4baa648e2ff6f2338, type: 3}
+      propertyPath: m_TagString
+      value: 20BlueTag
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a9ea82b5ce069d4baa648e2ff6f2338, type: 3}

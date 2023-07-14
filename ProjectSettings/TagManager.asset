@@ -5,6 +5,15 @@ TagManager:
   serializedVersion: 2
   tags:
   - BackSideCard
+  - 24CoffeeTag
+  - 22WaxTag
+  - 20BlueTag
+  - 18ChiliTag
+  - 16StinkTag
+  - 14GreenTag
+  - 12SoyTag
+  - 10BlackEyedTag
+  - 08RedTag
   layers:
   - Default
   - TransparentFX
