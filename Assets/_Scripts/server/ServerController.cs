@@ -6,7 +6,7 @@ using UnityEngine;
 public class ServerController : NetworkBehaviour
 {
     [SerializeField] private GameObject backSidePrefab;
-    private CardsData beanDeck;
+    private SerializedDeck beanDeck;
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
@@ -16,10 +16,10 @@ public class ServerController : NetworkBehaviour
         if (IsServer)
         {
             InstantiateDeck();
-            beanDeck = gameObject.AddComponent<CardsData>();
-            beanDeck.CreateNewCards();
-            beanDeck.ShuffleBeans();
-            beanDeck.printCardDeck();
+            beanDeck = gameObject.AddComponent<SerializedDeck>();
+            beanDeck.CreateNewDeck();
+            beanDeck.ShuffleDeck();
+            beanDeck.PrintDeck();
             StartCoroutine(WaitForTwoClients());
 
         }
@@ -52,7 +52,7 @@ public class ServerController : NetworkBehaviour
             if (client.ClientId == NetworkManager.Singleton.LocalClientId) // skip the server
                 continue;
 
-            CardsTemplate cardPop = beanDeck.Pop();
+            SerializedCard cardPop = beanDeck.PopCard();
             Debug.Log("pooped");
             Debug.Log(cardPop.GetCardType());
 
