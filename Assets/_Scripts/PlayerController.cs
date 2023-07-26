@@ -17,7 +17,7 @@ public class PlayerController : NetworkBehaviour
     {
         base.OnNetworkSpawn();
         Initialize();
-        startNetwork = FindObjectOfType<StartNetwork>();
+        startNetwork = FindFirstObjectByType<StartNetwork>();
         SetSpawnTransform();
     }
 

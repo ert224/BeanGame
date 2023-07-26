@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: d353e89cdb4dc60409c6814fc5b92356, type: 3}
   m_Name: 24coffeeBean
   m_EditorClassIdentifier: Assembly-CSharp::CardsScriptableObject
-  cardName: coffeBean
-  cardObj: {fileID: 5924056324361044861, guid: 09fb3f9ef78f412488a82311d7d13816, type: 3}
-  cardvalue: 1
+  cardName: coffee
+  cardObj: {fileID: 0}
+  cardvalue: 0
   tradeVal1: 0
   tradeVal2: 0
   tradeVal3: 0

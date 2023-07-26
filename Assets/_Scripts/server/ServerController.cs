@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -19,6 +20,8 @@ public class ServerController : NetworkBehaviour
             beanDeck.CreateNewCards();
             beanDeck.ShuffleBeans();
             beanDeck.printCardDeck();
+            StartCoroutine(WaitForTwoClients());
+
         }
 
     }
@@ -42,38 +45,25 @@ public class ServerController : NetworkBehaviour
 
     private void AssignCardToPlayer()
     {
+        if (!IsServer) return;
+
         foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
         {
             if (client.ClientId == NetworkManager.Singleton.LocalClientId) // skip the server
                 continue;
 
-            // Assuming CardsData has a method Pop that removes a card from the deck
             CardsTemplate cardPop = beanDeck.Pop();
             Debug.Log("pooped");
             Debug.Log(cardPop.GetCardType());
 
-            // Distribute the card
-            //Vector3 location = new Vector3(-60f, -60f, 0f);
-            //Quaternion rotCard = Quaternion.Euler(0f, 0f, 0f);
-            //GameObject spawnCard = Instantiate(cardPop.prefab, location, rotCard);
-            //spawnCard.GetComponent<NetworkObject>().Spawn();
-
-            // Add the card to the player's hand
             var playerHand = client.PlayerObject.GetComponent<PlayerHand>();
-            playerHand.AddCard(cardPop);
+            //playerHand.AddCardClientRpc(cardPop);
         }
     }
-    private void DistributeDeck(CardsTemplate cardTemp)
+
+    private IEnumerator WaitForTwoClients()
     {
-        if(!IsOwner) return;
-
-        Vector3 location = new Vector3(-60f, -60f, 0f);
-        Quaternion rotCard = Quaternion.Euler(0f, 0f, 0f);
-        GameObject spawnCard = Instantiate(cardTemp.prefab, location, rotCard);
-        spawnCard.GetComponent<NetworkObject>().Spawn();
-
-
+        yield return new WaitUntil(() => NetworkManager.Singleton.ConnectedClientsList.Count >= 2);
+        AssignCardToPlayer();
     }
-
-
 }
