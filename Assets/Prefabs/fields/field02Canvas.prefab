@@ -31,7 +31,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 74195092266779661}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -166,7 +165,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 74195092266779661}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -305,7 +303,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6388928493655897507}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -358,11 +355,32 @@ BoxCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2650542279469204044}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -373,7 +391,6 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
   m_Size: {x: 134, y: 67}
   m_EdgeRadius: 0
 --- !u!212 &3878259185984443048
@@ -463,7 +480,6 @@ RectTransform:
   - {fileID: 7191912374770426835}
   - {fileID: 654289788811420826}
   m_Father: {fileID: 6388928493655897507}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -487,7 +503,9 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -562,7 +580,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 74195092266779661}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -707,7 +724,6 @@ RectTransform:
   - {fileID: 1255441717629900759}
   - {fileID: 74195092266779661}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -731,7 +747,9 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -792,6 +810,7 @@ MonoBehaviour:
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
   SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
 --- !u!114 &450621331773578555
@@ -849,9 +868,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71d9d1dadc563d347885cc42979c85c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frontSide: {fileID: 5924056324361044861, guid: 09fb3f9ef78f412488a82311d7d13816, type: 3}
   length:
     m_InternalValue: 1
+  positionRage: 5
+  coffee: {fileID: 5924056324361044861, guid: 09fb3f9ef78f412488a82311d7d13816, type: 3}
+  wax: {fileID: 6805774356388498083, guid: 8189c9b3664c9e64bac991e1dd8f97dd, type: 3}
+  blue: {fileID: 4287930444590694260, guid: eccec2ae6af987d41900cc21ccf544ed, type: 3}
+  chili: {fileID: 8576015893919680231, guid: 8a9ea82b5ce069d4baa648e2ff6f2338, type: 3}
+  stink: {fileID: 6445754432376501835, guid: 61c757a8163f9a34799e2e11f95122a3, type: 3}
+  green: {fileID: 600295736721093053, guid: 1ee2d43f8aba93440890cce43dcc80d4, type: 3}
+  soy: {fileID: 1918308962813563331, guid: 7b908808cfe05a244b6439b96ba13b13, type: 3}
+  black: {fileID: 1429110880299465585, guid: 24b6ff3d0f7ede5429ef59f6d9cef231, type: 3}
+  red: {fileID: 8127874378930341525, guid: 37f79947dc2115347b776c63915f7754, type: 3}
 --- !u!114 &7455281482383323960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -892,7 +920,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: cf64643f-c596-49eb-b786-24ced4a83ec9
-    m_ActionName: GamePlay/Click[/Mouse/leftButton]
+    m_ActionName: 'GamePlay/Click[/Mouse/leftButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: GamePlay
