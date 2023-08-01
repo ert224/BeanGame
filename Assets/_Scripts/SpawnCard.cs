@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -38,4 +39,30 @@ public class SpawnCard : MonoBehaviour
         // Snap to the final position
         transform.position = _targetPosition;
     }
+    public  Quaternion GetPlayerRotation(ulong player)
+    {
+        Debug.Log("Network Rsponse");
+        if (player == 0)
+        {
+            return Quaternion.Euler(0f, 0f, 0f);
+        }
+        else if (player == 1)
+        {
+            return Quaternion.Euler(0f, 0f, -90f);
+        }
+        else if (player == 2)
+        {
+            return Quaternion.Euler(0f, 0f, 90f);
+        }
+        else if (player == 3)
+        {
+            return Quaternion.Euler(0f, 0f, 180f);
+        }
+
+        // Handle case where player does not match expected values (0, 1, 2, 3)
+        // You can return a default rotation, log an error, throw an exception, etc.
+        Debug.LogError("Invalid player value for GetPlayerRotation: " + player);
+        return Quaternion.identity; // default rotation
+    }
+
 }

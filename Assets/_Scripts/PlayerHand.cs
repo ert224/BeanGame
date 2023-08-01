@@ -73,9 +73,9 @@ public class PlayerHand : NetworkBehaviour
     private void InstantiateCard()
     {
         if (!IsServer) return;
-        ulong clientId = OwnerClientId;
+        ulong playerID = OwnerClientId;
         Debug.Log("Client Id");
-        Debug.Log(clientId);
+        Debug.Log(playerID);
         if (allPrefabs == null)
         {
             Debug.LogError("allPrefabs is null. Please make sure it is assigned in the Unity Editor.");
@@ -93,8 +93,11 @@ public class PlayerHand : NetworkBehaviour
                 return;
             }
 
-            
-            NetworkObject cardGameObj = Instantiate(networkCardPrefab, transform.position, transform.rotation);
+            Vector3 location = new Vector3(0f, 0f, 0f);
+            Quaternion playerRotation = GetPlayerRotation(playerID);
+            //NetworkObject cardGameObj = Instantiate(networkCardPrefab, transform.position, transform.rotation);
+            NetworkObject cardGameObj = Instantiate(networkCardPrefab, location, playerRotation);
+
             cardGameObj.GetComponent<SpriteRenderer>().sortingOrder = -length.Value;
             cardGameObj.GetComponent<NetworkObject>().Spawn(true);
             if (cardGameObj.TryGetComponent(out SpawnCard moveCard))
@@ -105,6 +108,7 @@ public class PlayerHand : NetworkBehaviour
                 moveCard.followTransform = _lastCard;
                 _lastCard = cardGameObj.transform;
                 moveCard.BeginMoveToParent();
+                //moveCard.networkedOwner.rotation = moveCard.GetPlayerRotation(playerID);
 
 
             }
@@ -118,6 +122,36 @@ public class PlayerHand : NetworkBehaviour
             Debug.Log(allPrefabs.ReturnPrefab(_card.GetCardType()));
         }
     }
+
+    private Quaternion GetPlayerRotation(ulong player)
+    {
+        Debug.Log("Network Rsponse");
+        if (player == 0)
+        {
+            return Quaternion.Euler(0f, 0f, 0f);
+        }
+        else if (player == 1)
+        {
+            return Quaternion.Euler(0f, 0f, -90f);
+        }
+        else if (player == 2)
+        {
+            return Quaternion.Euler(0f, 0f, 90f);
+        }
+        else if (player == 3)
+        {
+            return Quaternion.Euler(0f, 0f, 180f);
+        }
+
+        // Handle case where player does not match expected values (0, 1, 2, 3)
+        // You can return a default rotation, log an error, throw an exception, etc.
+        Debug.LogError("Invalid player value for GetPlayerRotation: " + player);
+        return Quaternion.identity; // default rotation
     }
+
+
+
+
+}
 
 
