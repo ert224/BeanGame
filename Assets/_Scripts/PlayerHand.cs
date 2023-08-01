@@ -95,22 +95,31 @@ public class PlayerHand : NetworkBehaviour
 
             Vector3 location = new Vector3(0f, 0f, 0f);
             Quaternion playerRotation = GetPlayerRotation(playerID);
-            //NetworkObject cardGameObj = Instantiate(networkCardPrefab, transform.position, transform.rotation);
             NetworkObject cardGameObj = Instantiate(networkCardPrefab, location, playerRotation);
 
             cardGameObj.GetComponent<SpriteRenderer>().sortingOrder = -length.Value;
             cardGameObj.GetComponent<NetworkObject>().Spawn(true);
+            //if (cardGameObj.TryGetComponent(out SpawnCard moveCard))
+            //{
+            //    Debug.Log("Current Transform");
+            //    Debug.Log(transform.position);
+            //    moveCard.networkedOwner = transform;
+            //    moveCard.networkedOwner.transform.position = SetCardLocation(playerID);
+            //    moveCard.followTransform = _lastCard;
+            //    _lastCard = cardGameObj.transform;
+            //    moveCard.BeginMoveToParent();
+
+            //}
             if (cardGameObj.TryGetComponent(out SpawnCard moveCard))
             {
                 Debug.Log("Current Transform");
                 Debug.Log(transform.position);
                 moveCard.networkedOwner = transform;
+                Vector3 cardLocation = SetCardLocation(playerID);
+                moveCard.SetTargetLocation(cardLocation);
                 moveCard.followTransform = _lastCard;
                 _lastCard = cardGameObj.transform;
                 moveCard.BeginMoveToParent();
-                //moveCard.networkedOwner.rotation = moveCard.GetPlayerRotation(playerID);
-
-
             }
 
             _CardsList.Add(cardGameObj.gameObject);
@@ -121,6 +130,40 @@ public class PlayerHand : NetworkBehaviour
             Debug.Log("Prefab is null");
             Debug.Log(allPrefabs.ReturnPrefab(_card.GetCardType()));
         }
+    }
+
+
+    private ulong CountRot = 0;
+    public Vector3 SetCardLocation(ulong player)
+    {
+        float Rot = CountRot * 29;
+        Vector3 hold = new Vector3(0f, 0f, 0f) ;
+        Debug.Log("Network Rsponse");
+        if (player == 0)
+        {
+            hold = new Vector3(-60f+ Rot, -60f, 0f);
+        }
+        else if (player == 1)
+        {
+            hold = new Vector3(-178f, 60f - Rot, 0f);
+        }
+        else if (player == 2)
+        {
+            hold = new Vector3(-60f - Rot, 60f, 0f);
+        }
+        else if (player == 3)
+        {
+            hold = new Vector3(178f, 60f - Rot, 0f);
+        }
+        // Handle case where player does not match expected values (0, 1, 2, 3)
+        // You can return a default rotation, log an error, throw an exception, etc.
+        Debug.LogError("Invalid player value for getcard location: " + player);
+        Debug.Log(CountRot);
+        CountRot++;
+
+        return hold;
+
+        //return new Vector3(0f, -115f, 0f); // default rotation
     }
 
     private Quaternion GetPlayerRotation(ulong player)
@@ -148,8 +191,6 @@ public class PlayerHand : NetworkBehaviour
         Debug.LogError("Invalid player value for GetPlayerRotation: " + player);
         return Quaternion.identity; // default rotation
     }
-
-
 
 
 }
