@@ -1536,6 +1536,7 @@ GameObject:
   - component: {fileID: -6970647636067219173}
   - component: {fileID: 2165573405670299825}
   - component: {fileID: -6045481883555083754}
+  - component: {fileID: -4327502188027881099}
   m_Layer: 0
   m_Name: 24CoffeeBean
   m_TagString: 24CoffeeTag
@@ -1665,6 +1666,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-4327502188027881099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5924056324361044861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79d9abd5928fb364188cd6f8a370fe39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  networkedOwner: {fileID: 0}
+  followTransform: {fileID: 0}
+  delayTime: 0.1
+  distance: 50
+  moveStep: 20
 --- !u!1 &6611132357822927775
 GameObject:
   m_ObjectHideFlags: 0

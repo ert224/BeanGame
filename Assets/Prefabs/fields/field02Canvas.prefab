@@ -870,16 +870,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   length:
     m_InternalValue: 1
-  positionRage: 5
-  coffee: {fileID: 5924056324361044861, guid: 09fb3f9ef78f412488a82311d7d13816, type: 3}
-  wax: {fileID: 6805774356388498083, guid: 8189c9b3664c9e64bac991e1dd8f97dd, type: 3}
-  blue: {fileID: 4287930444590694260, guid: eccec2ae6af987d41900cc21ccf544ed, type: 3}
-  chili: {fileID: 8576015893919680231, guid: 8a9ea82b5ce069d4baa648e2ff6f2338, type: 3}
-  stink: {fileID: 6445754432376501835, guid: 61c757a8163f9a34799e2e11f95122a3, type: 3}
-  green: {fileID: 600295736721093053, guid: 1ee2d43f8aba93440890cce43dcc80d4, type: 3}
-  soy: {fileID: 1918308962813563331, guid: 7b908808cfe05a244b6439b96ba13b13, type: 3}
-  black: {fileID: 1429110880299465585, guid: 24b6ff3d0f7ede5429ef59f6d9cef231, type: 3}
-  red: {fileID: 8127874378930341525, guid: 37f79947dc2115347b776c63915f7754, type: 3}
+  allPrefabs: {fileID: 11400000, guid: 69fe55b24d787fb43a941533d89e82dc, type: 2}
 --- !u!114 &7455281482383323960
 MonoBehaviour:
   m_ObjectHideFlags: 0

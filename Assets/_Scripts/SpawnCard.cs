@@ -8,7 +8,7 @@ public class SpawnCard : MonoBehaviour
     public Transform followTransform;
 
    [SerializeField, Tooltip("Represents the time delay between the GameObject and it's target")] private float delayTime = 0.1f;
-   [SerializeField, Tooltip("The distance the GameObject should keep from it's target")] private float distance = 15f;
+   [SerializeField, Tooltip("The distance the GameObject should keep from it's target")] private float distance = 50f;
    [SerializeField, Tooltip("Movement lerp speed")] private float moveStep = 20f;
 
     private Vector3 _targetPosition;

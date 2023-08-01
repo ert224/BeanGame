@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using UnityEditor.Timeline.Actions;
 using UnityEngine;
@@ -12,8 +13,6 @@ public class PlayerHand : NetworkBehaviour
     public static event System.Action<ushort> ChangedLengthEvent;
 
     #region Private Variables
-
-    private List<SerializedCard> _HandList;
     private List<GameObject> _CardsList;
     #endregion Private Variables
     private Transform _lastCard;
@@ -21,68 +20,66 @@ public class PlayerHand : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-        _HandList = new List<SerializedCard>();
         _CardsList = new List<GameObject>();
         _lastCard = transform;
         _collider2D = GetComponent<Collider2D>();
         if (!IsServer) length.OnValueChanged += LengthChangedEvent;
         if (IsOwner) return;
         //for (int i = 0; i < length.Value - 1; ++i)
-        //   InstantiateCard(0);
+        //    InstantiateCard();
+        //Subscribe to the LengthChangedEvent only if it's the owner client
+        //if (IsOwner)
+        //{
+        //    length.OnValueChanged += LengthChangedEvent;
+        //}
+        //If not the owner, spawn the cards based on the length received from the server
+        //if (!IsOwner)
+        //{
+        //    for (int i = 0; i < length.Value; ++i)
+        //    {
+        //        InstantiateCard();
+        //    }
+        //}
+
     }
 
-
+    private SerializedCard _card;
     [ClientRpc]
     public void AddCardClientRpc(SerializedCard card)
     {
-        if (!IsOwner) return;
+        if (!IsServer) return;
         Debug.Log("In add card");
-        _HandList.Add(card);
-        giveType.Value = card.GetCardType(); // Update the NetworkVariable value
-        Debug.Log("card tyoepe ${card.GetCardType()}");
-        Debug.Log(card.GetCardType());
+        Debug.Log($"Card type:");
+        _card = card;
+        Debug.Log(_card.GetCardType());
         RequestAddCardServerRpc();
-        Debug.Log(_HandList);
-    }
-    // Request the server to add a card.
-    [ServerRpc]
-    private void RequestAddCardServerRpc()
-    {
-        AddLength(); // The server will add the card by invoking the AddLength method.
     }
 
+    [ServerRpc(RequireOwnership = false)]
+    private void RequestAddCardServerRpc()
+    {
+        AddLengthServer(); // The server will add the card by invoking the AddLength method.
+    }
 
     /// <summary>
     /// Adds a length to the NetworkVariable.
     /// This will only be called on the server.
     /// </summary>
-    // [ServerRpc(RequireOwnership = false)]
-    [ContextMenu(itemName: "Add Card")]
-    public void AddLength()
+    public void AddLengthServer()
     {
+        if (!IsServer) return;
         length.Value += 1;
         LengthChanged();
     }
-    /// <summary>
-    /// Called when the NetworkVariable length has changed.
-    /// Instantiates tails on the other clients to be synchronized.
-    /// </summary>
+
     private void LengthChanged()
     {
-        Debug.Log("Length Changed ");
-        Debug.Log(_HandList.Count);   
         InstantiateCard();
         if (!IsOwner) return;
-            ChangedLengthEvent?.Invoke(length.Value);
+        
+        ChangedLengthEvent?.Invoke(length.Value);
     }
 
-
-    [ContextMenu(itemName: "Print Lista")]
-    private void printLista()
-    {
-           Debug.Log("Length Changed ");
-           Debug.Log(_HandList.Count);
-    }
     /// <summary>
     /// Called when the NetworkVariable length has changed.
     /// </summary>
@@ -91,99 +88,54 @@ public class PlayerHand : NetworkBehaviour
     private void LengthChangedEvent(ushort previousValue, ushort newValue)
     {
         Debug.Log("LengthChanged Callback");
-        LengthChanged();
+         LengthChanged();
     }
 
 
 
-    public NetworkVariable<string> giveType = new NetworkVariable<string>("", NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
-
-    [SerializeField] private float positionRage = 5f;
-   [ContextMenu(itemName: "Spawn card")]
+    [SerializeField]
+    private AllPrefabs allPrefabs;
+    [ContextMenu(itemName: "Spawn card")]
     private void InstantiateCard()
     {
-        Debug.Log($"Card {giveType.Value} Index");
-        ///Debug.Log(_HandList[index].GetCardTag());
-        GameObject cardPrefab = getCardType(giveType.Value).gameObject;
-        NetworkObject cardObj = cardPrefab.GetComponent<NetworkObject>();
-
-        if (cardObj != null)
+        if (allPrefabs == null)
         {
-            GameObject cardGameObj = Instantiate(cardPrefab, transform.position, Quaternion.identity);
-            cardGameObj.GetComponent<SpriteRenderer>().sortingOrder = -length.Value; //previously spawned card 
-            if (cardGameObj.TryGetComponent(out SpawnCard spawncard))
-                {
-                    spawncard.networkedOwner = transform;
-                    spawncard.followTransform = _lastCard; //previouly spawend
-                    _lastCard = cardGameObj.transform;
-                    Physics2D.IgnoreCollision(cardGameObj.GetComponent<Collider2D>(), _collider2D);
-                }
-             _CardsList.Add(cardGameObj);
+            Debug.LogError("allPrefabs is null. Please make sure it is assigned in the Unity Editor.");
+            return;
+        }
+        if (allPrefabs.ReturnPrefab(_card.GetCardType()))
+        {
+            GameObject cardPrefab = allPrefabs.ReturnPrefab(_card.GetCardType());
+            NetworkObject networkCardPrefab = cardPrefab.GetComponent<NetworkObject>();
+
+            if (networkCardPrefab == null)
+            {
+                Debug.LogError("NetworkObject component is missing from the card prefab.");
+                return;
+            }
+            
+            NetworkObject cardGameObj = Instantiate(networkCardPrefab, transform.position, Quaternion.identity);
+            cardGameObj.GetComponent<SpriteRenderer>().sortingOrder = length.Value;
+            cardGameObj.GetComponent<NetworkObject>().Spawn(true);
+            if(cardGameObj.TryGetComponent(out SpawnCard moveCard)){
+                Debug.Log("Current Transform");
+                Debug.Log(transform.position);
+                moveCard.networkedOwner = transform;
+                moveCard.followTransform = _lastCard;
+                _lastCard = cardGameObj.transform;
+                Physics2D.IgnoreCollision(cardGameObj.GetComponent<Collider2D>(), _collider2D);
+
+            }
+
+            _CardsList.Add(cardGameObj.gameObject);
+
         }
         else
         {
-            Debug.LogError("No GameObject found with tag ");
+            Debug.Log("Prefab is null");
+            Debug.Log(allPrefabs.ReturnPrefab(_card.GetCardType()));
         }
-        //cardObj.Spawn();
-
     }
-
-    [SerializeField, Tooltip("The tail prefab that will be spawned when the player eats the food.")] private GameObject coffee;
-    [SerializeField, Tooltip("The tail prefab that will be spawned when the player eats the food.")] private GameObject wax;
-    [SerializeField, Tooltip("The tail prefab that will be spawned when the player eats the food.")] private GameObject blue;
-    [SerializeField, Tooltip("The tail prefab that will be spawned when the player eats the food.")] private GameObject chili;
-    [SerializeField, Tooltip("The tail prefab that will be spawned when the player eats the food.")] private GameObject stink;
-    [SerializeField, Tooltip("The tail prefab that will be spawned when the player eats the food.")] private GameObject green;
-    [SerializeField, Tooltip("The tail prefab that will be spawned when the player eats the food.")] private GameObject soy;
-    [SerializeField, Tooltip("The tail prefab that will be spawned when the player eats the food.")] private GameObject black;
-    [SerializeField, Tooltip("The tail prefab that will be spawned when the player eats the food.")] private GameObject red;
-
-    private NetworkObject getCardType(string popType)
-    {
-        if (popType== "coffee"){
-            return coffee.GetComponent<NetworkObject>();
-        }
-        else if (popType == "wax")
-        {
-            return wax.GetComponent<NetworkObject>();
-
-        }
-        else if (popType == "blue")
-        {
-            return blue.GetComponent<NetworkObject>();
-
-        }
-        else if (popType == "chili")
-        {
-            return chili.GetComponent<NetworkObject>();
-
-        }
-        else if (popType == "stink")
-        {
-            return stink.GetComponent<NetworkObject>();
-
-        }
-        else if (popType == "green")
-        {
-            return green.GetComponent<NetworkObject>();
-
-        }
-        else if (popType == "soy")
-        {
-            return soy.GetComponent<NetworkObject>();
-
-        }
-        else if (popType == "black")
-        {
-            return black.GetComponent<NetworkObject>();
-
-        }
-        else if (popType == "red")
-        {
-            return red.GetComponent<NetworkObject>();
-        }
-        return null;
-    }
-
 
 }
+
