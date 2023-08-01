@@ -21,7 +21,6 @@ public class ServerController : NetworkBehaviour
             beanDeck = gameObject.AddComponent<SerializedDeck>();
             beanDeck.CreateNewDeck();
             beanDeck.ShuffleDeck();
-            beanDeck.PrintDeck();
             StartCoroutine(WaitForTwoClients());
 
         }

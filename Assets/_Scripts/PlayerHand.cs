@@ -3,14 +3,14 @@ using System.Linq;
 using Unity.Netcode;
 using UnityEditor.Timeline.Actions;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerHand : NetworkBehaviour
 {
-    // Synced Variable that keeps track of the player snake length.
-    public NetworkVariable<ushort> length = new(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     // Called when the length has changed. This is more for local client-side updates.
     public static event System.Action<ushort> ChangedLengthEvent;
+    public NetworkVariable<ushort> length = new(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     #region Private Variables
     private List<GameObject> _CardsList;
@@ -25,22 +25,6 @@ public class PlayerHand : NetworkBehaviour
         _collider2D = GetComponent<Collider2D>();
         if (!IsServer) length.OnValueChanged += LengthChangedEvent;
         if (IsOwner) return;
-        //for (int i = 0; i < length.Value - 1; ++i)
-        //    InstantiateCard();
-        //Subscribe to the LengthChangedEvent only if it's the owner client
-        //if (IsOwner)
-        //{
-        //    length.OnValueChanged += LengthChangedEvent;
-        //}
-        //If not the owner, spawn the cards based on the length received from the server
-        //if (!IsOwner)
-        //{
-        //    for (int i = 0; i < length.Value; ++i)
-        //    {
-        //        InstantiateCard();
-        //    }
-        //}
-
     }
 
     private SerializedCard _card;
@@ -52,23 +36,25 @@ public class PlayerHand : NetworkBehaviour
         Debug.Log($"Card type:");
         _card = card;
         Debug.Log(_card.GetCardType());
-        RequestAddCardServerRpc();
+        AddLengthServerRpc();
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    private void RequestAddCardServerRpc()
+    private void LengthChangedEvent(ushort previousValue, ushort newValue)
     {
-        AddLengthServer(); // The server will add the card by invoking the AddLength method.
+        LengthChanged();
     }
+
 
     /// <summary>
     /// Adds a length to the NetworkVariable.
     /// This will only be called on the server.
     /// </summary>
-    public void AddLengthServer()
+    [ServerRpc(RequireOwnership = false)]
+    public void AddLengthServerRpc()
     {
         if (!IsServer) return;
         length.Value += 1;
+
         LengthChanged();
     }
 
@@ -76,33 +62,26 @@ public class PlayerHand : NetworkBehaviour
     {
         InstantiateCard();
         if (!IsOwner) return;
-        
         ChangedLengthEvent?.Invoke(length.Value);
+
+
     }
-
-    /// <summary>
-    /// Called when the NetworkVariable length has changed.
-    /// </summary>
-    /// <param name="previousValue">Mandatory callback parameter. Not used.</param>
-    /// <param name="newValue">Mandatory callback parameter. Not used.</param>
-    private void LengthChangedEvent(ushort previousValue, ushort newValue)
-    {
-        Debug.Log("LengthChanged Callback");
-         LengthChanged();
-    }
-
-
 
     [SerializeField]
     private AllPrefabs allPrefabs;
     [ContextMenu(itemName: "Spawn card")]
     private void InstantiateCard()
     {
+        if (!IsServer) return;
+        ulong clientId = OwnerClientId;
+        Debug.Log("Client Id");
+        Debug.Log(clientId);
         if (allPrefabs == null)
         {
             Debug.LogError("allPrefabs is null. Please make sure it is assigned in the Unity Editor.");
             return;
         }
+
         if (allPrefabs.ReturnPrefab(_card.GetCardType()))
         {
             GameObject cardPrefab = allPrefabs.ReturnPrefab(_card.GetCardType());
@@ -113,17 +92,20 @@ public class PlayerHand : NetworkBehaviour
                 Debug.LogError("NetworkObject component is missing from the card prefab.");
                 return;
             }
+
             
-            NetworkObject cardGameObj = Instantiate(networkCardPrefab, transform.position, Quaternion.identity);
-            cardGameObj.GetComponent<SpriteRenderer>().sortingOrder = length.Value;
+            NetworkObject cardGameObj = Instantiate(networkCardPrefab, transform.position, transform.rotation);
+            cardGameObj.GetComponent<SpriteRenderer>().sortingOrder = -length.Value;
             cardGameObj.GetComponent<NetworkObject>().Spawn(true);
-            if(cardGameObj.TryGetComponent(out SpawnCard moveCard)){
+            if (cardGameObj.TryGetComponent(out SpawnCard moveCard))
+            {
                 Debug.Log("Current Transform");
                 Debug.Log(transform.position);
                 moveCard.networkedOwner = transform;
                 moveCard.followTransform = _lastCard;
                 _lastCard = cardGameObj.transform;
-                Physics2D.IgnoreCollision(cardGameObj.GetComponent<Collider2D>(), _collider2D);
+                moveCard.BeginMoveToParent();
+
 
             }
 
@@ -136,6 +118,6 @@ public class PlayerHand : NetworkBehaviour
             Debug.Log(allPrefabs.ReturnPrefab(_card.GetCardType()));
         }
     }
+    }
 
-}
 
