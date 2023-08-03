@@ -17,6 +17,7 @@ public class PlayerHand : NetworkBehaviour
     #endregion Private Variables
     private Transform _lastCard;
     private Collider2D _collider2D;
+
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
@@ -28,6 +29,7 @@ public class PlayerHand : NetworkBehaviour
     }
 
     private SerializedCard _card;
+
     [ClientRpc]
     public void AddCardClientRpc(SerializedCard card)
     {
@@ -98,20 +100,11 @@ public class PlayerHand : NetworkBehaviour
             NetworkObject cardGameObj = Instantiate(networkCardPrefab, location, playerRotation);
 
             cardGameObj.GetComponent<SpriteRenderer>().sortingOrder = -length.Value;
-            cardGameObj.GetComponent<NetworkObject>().Spawn(true);
-            //if (cardGameObj.TryGetComponent(out SpawnCard moveCard))
-            //{
-            //    Debug.Log("Current Transform");
-            //    Debug.Log(transform.position);
-            //    moveCard.networkedOwner = transform;
-            //    moveCard.networkedOwner.transform.position = SetCardLocation(playerID);
-            //    moveCard.followTransform = _lastCard;
-            //    _lastCard = cardGameObj.transform;
-            //    moveCard.BeginMoveToParent();
+            cardGameObj.GetComponent<NetworkObject>().SpawnWithOwnership(OwnerClientId,true);
 
-            //}
             if (cardGameObj.TryGetComponent(out SpawnCard moveCard))
             {
+
                 Debug.Log("Current Transform");
                 Debug.Log(transform.position);
                 moveCard.networkedOwner = transform;
@@ -119,7 +112,7 @@ public class PlayerHand : NetworkBehaviour
                 moveCard.SetTargetLocation(cardLocation);
                 moveCard.followTransform = _lastCard;
                 _lastCard = cardGameObj.transform;
-                moveCard.BeginMoveToParent();
+                // moveCard.BeginMoveToParent();
             }
 
             _CardsList.Add(cardGameObj.gameObject);
@@ -157,7 +150,7 @@ public class PlayerHand : NetworkBehaviour
         }
         // Handle case where player does not match expected values (0, 1, 2, 3)
         // You can return a default rotation, log an error, throw an exception, etc.
-        Debug.LogError("Invalid player value for getcard location: " + player);
+        Debug.Log("Invalid player value for getcard location: " + player);
         Debug.Log(CountRot);
         CountRot++;
 
@@ -188,7 +181,7 @@ public class PlayerHand : NetworkBehaviour
 
         // Handle case where player does not match expected values (0, 1, 2, 3)
         // You can return a default rotation, log an error, throw an exception, etc.
-        Debug.LogError("Invalid player value for GetPlayerRotation: " + player);
+        Debug.Log("Invalid player value for GetPlayerRotation: " + player);
         return Quaternion.identity; // default rotation
     }
 
