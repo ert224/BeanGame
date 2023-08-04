@@ -77,8 +77,7 @@ public class ServerController : NetworkBehaviour
             }
             count++;
         }
-         Debug.Log("loops");
-         PrintClientsLists();
+         Debug.Log("end of loop");
     }
     private List<List<SerializedCard>> _ClientsLists;
 

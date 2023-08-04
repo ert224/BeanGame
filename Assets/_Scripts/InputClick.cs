@@ -24,8 +24,7 @@ public class InputClick : NetworkBehaviour
     public void OnClick(InputAction.CallbackContext context)
     {
         Debug.Log("In click eevent ");
-        if (!IsOwner) return;
-        //if(!)
+        if (!IsOwner || !Application.isFocused) return;
         if (!context.started) return;
         rayHit = Physics2D.GetRayIntersection(_mainCamera.ScreenPointToRay((Vector3)Mouse.current.position.ReadValue()));
         if (!rayHit.collider) return;
@@ -36,16 +35,21 @@ public class InputClick : NetworkBehaviour
         var networkBehaviour = rayHit.collider.gameObject.GetComponent<NetworkBehaviour>();
 
         Debug.Log("Owner of clicked object: " + networkBehaviour.OwnerClientId);
-
-        PlantCardServer();
+        Debug.Log("Owner of this InputClick instance: " + this.OwnerClientId);
+        PlantCardServerRpc();
 
     }
 
-    private Vector3 downOffset = new Vector3(0, -50, 0);
+    private Vector3 downOffset = new Vector3(-25, -50, 0);
 
-   // [ServerRpc]
-    public void PlantCardServer()
-    {
+    [ServerRpc(RequireOwnership = false)]
+    public void PlantCardServerRpc(ServerRpcParams serverRpcParams = default){
+
+        //var networkBehaviour = rayHit.collider.gameObject.GetComponent<NetworkBehaviour>();
+        //if (serverRpcParams.Receive.SenderClientId == networkBehaviour.NetworkObjectId)
+        //{
+        //    return;
+        //}
         Debug.Log("Inside plant field ");
         // Make sure rayHit.collider is not null
         if (rayHit.collider == null)
@@ -69,6 +73,5 @@ public class InputClick : NetworkBehaviour
             Debug.Log("Null Spawn card");
         }
     }
-
 
 }
