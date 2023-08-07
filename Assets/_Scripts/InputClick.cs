@@ -18,12 +18,11 @@ public class InputClick : NetworkBehaviour
     {
         _mainCamera = Camera.main;
     }
-
+    private Vector3 downOffset = new Vector3(-25, -50, 0);
     private RaycastHit2D rayHit;
 
     public void OnClick(InputAction.CallbackContext context)
     {
-        Debug.Log("In click eevent ");
         if (!IsOwner || !Application.isFocused) return;
         if (!context.started) return;
         rayHit = Physics2D.GetRayIntersection(_mainCamera.ScreenPointToRay((Vector3)Mouse.current.position.ReadValue()));
@@ -31,47 +30,36 @@ public class InputClick : NetworkBehaviour
 
         Debug.Log("ray hit collider");
         Debug.Log(rayHit.collider.gameObject.name);
-        //plantCardServerRpc(rayHit.collider.gameObject);
         var networkBehaviour = rayHit.collider.gameObject.GetComponent<NetworkBehaviour>();
-
-        Debug.Log("Owner of clicked object: " + networkBehaviour.OwnerClientId);
-        Debug.Log("Owner of this InputClick instance: " + this.OwnerClientId);
-        PlantCardServerRpc();
+        if (networkBehaviour.IsOwner)
+        {
+            Debug.Log("Card and Client Match");
+            Vector3 newTarget = rayHit.collider.gameObject.transform.position + downOffset;
+            PlantCardServerRpc(networkBehaviour.NetworkObject.NetworkObjectId, newTarget);
+        }
 
     }
 
-    private Vector3 downOffset = new Vector3(-25, -50, 0);
-
-    [ServerRpc(RequireOwnership = false)]
-    public void PlantCardServerRpc(ServerRpcParams serverRpcParams = default){
-
-        //var networkBehaviour = rayHit.collider.gameObject.GetComponent<NetworkBehaviour>();
-        //if (serverRpcParams.Receive.SenderClientId == networkBehaviour.NetworkObjectId)
-        //{
-        //    return;
-        //}
-        Debug.Log("Inside plant field ");
-        // Make sure rayHit.collider is not null
-        if (rayHit.collider == null)
+    [ServerRpc]
+    public void PlantCardServerRpc(ulong networkObjectId, Vector3 newTarget)
+    {
+        if (!NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(networkObjectId, out NetworkObject networkObject))
         {
-            Debug.Log("rayHit.collider is null");
+            Debug.Log("NetworkObject not found");
             return;
         }
-        // Make sure the object has a SpawnCard script
-        var spawnCard = rayHit.collider.gameObject.GetComponent<SpawnCard>();
-        if (spawnCard != null)
-        {
 
-            // Compute new target position
-            Vector3 newTarget = rayHit.collider.gameObject.transform.position + downOffset;
-
-            // Set the new target position
-            spawnCard.SetTargetLocation(newTarget);
-        }
-        else
+        var spawnCard = networkObject.gameObject.GetComponent<SpawnCard>();
+        if (spawnCard == null)
         {
-            Debug.Log("Null Spawn card");
+            Debug.Log("SpawnCard component is missing");
+            return;
         }
+
+        Debug.Log("change move move");
+        spawnCard.SetTargetLocation(newTarget);
+        spawnCard.UpdatePlayerPositionServerRpc(newTarget.x, newTarget.y, newTarget.z);
     }
+
 
 }

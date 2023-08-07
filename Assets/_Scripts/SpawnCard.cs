@@ -12,7 +12,7 @@ public class SpawnCard : NetworkBehaviour
     [SerializeField, Tooltip("Duration of the lerp")] private float lerpDuration = 0.1f; // Adjust this value
     [SerializeField, Tooltip("The speed the GameObject should move at")] private float speed = 1000; // This is your new movement speed
 
-    private Vector3 _targetPosition;
+    public Vector3 _targetPosition;
 
     public Vector3  velocity = Vector3.zero;
 
@@ -22,8 +22,6 @@ public class SpawnCard : NetworkBehaviour
     {
         _targetPosition = target;
     }
-
-
 
     private float increTime = 0;
     private void Update()
@@ -36,7 +34,7 @@ public class SpawnCard : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    void UpdatePlayerPositionServerRpc(float xPos, float yPos, float zPos)
+    public void UpdatePlayerPositionServerRpc(float xPos, float yPos, float zPos)
     {
         Position.Value = new Vector3(xPos, yPos, zPos); 
 

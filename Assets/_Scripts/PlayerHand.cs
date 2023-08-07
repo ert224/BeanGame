@@ -24,7 +24,7 @@ public class PlayerHand : NetworkBehaviour
         _CardsList = new List<GameObject>();
         _lastCard = transform;
         _collider2D = GetComponent<Collider2D>();
-        //if (!IsServer) length.OnValueChanged += LengthChangedEvent;
+        if (!IsServer) length.OnValueChanged += LengthChangedEvent;
         if (IsOwner) return;
     }
 
@@ -33,19 +33,48 @@ public class PlayerHand : NetworkBehaviour
     [ClientRpc]
     public void AddCardClientRpc(SerializedCard card)
     {
-       //if (!IsServer) return;
+        if (!IsServer) return;
         Debug.Log("In add card");
         Debug.Log($"Card type:");
         _card = card;
         Debug.Log(_card.GetCardType());
-        InstantiateCardClient();
+        AddLengthServerRpc();
+    }
+
+    private void LengthChangedEvent(ushort previousValue, ushort newValue)
+    {
+        LengthChanged();
     }
 
 
-
-    [SerializeField] private AllPrefabs allPrefabs;
-    private void InstantiateCardClient()
+    /// <summary>
+    /// Adds a length to the NetworkVariable.
+    /// This will only be called on the server.
+    /// </summary>
+    [ServerRpc(RequireOwnership = false)]
+    public void AddLengthServerRpc()
     {
+        if (!IsServer) return;
+        length.Value += 1;
+
+        LengthChanged();
+    }
+
+    private void LengthChanged()
+    {
+        InstantiateCard();
+        if (!IsOwner) return;
+        ChangedLengthEvent?.Invoke(length.Value);
+
+
+    }
+
+    [SerializeField]
+    private AllPrefabs allPrefabs;
+    [ContextMenu(itemName: "Spawn card")]
+    private void InstantiateCard()
+    {
+        if (!IsServer) return;
         ulong playerID = OwnerClientId;
         Debug.Log("Client Id");
         Debug.Log(playerID);
@@ -70,8 +99,8 @@ public class PlayerHand : NetworkBehaviour
             Quaternion playerRotation = GetPlayerRotation(playerID);
             NetworkObject cardGameObj = Instantiate(networkCardPrefab, location, playerRotation);
 
-            // cardGameObj.GetComponent<SpriteRenderer>().sortingOrder = -length.Value;
-           //  cardGameObj.GetComponent<NetworkObject>().SpawnWithOwnership(OwnerClientId,true);
+            cardGameObj.GetComponent<SpriteRenderer>().sortingOrder = -length.Value;
+            cardGameObj.GetComponent<NetworkObject>().SpawnWithOwnership(OwnerClientId,true);
 
             if (cardGameObj.TryGetComponent(out SpawnCard moveCard))
             {
