@@ -8,10 +8,7 @@ public class SpawnCard : NetworkBehaviour
     public Transform networkedOwner;
     // The Transform object that this tail is following
     public Transform followTransform;
-    [SerializeField, Tooltip("Represents the time delay between the GameObject and it's target")] private float delayTime = 20f;
     [SerializeField, Tooltip("Duration of the lerp")] private float lerpDuration = 0.1f; // Adjust this value
-    [SerializeField, Tooltip("The speed the GameObject should move at")] private float speed = 1000; // This is your new movement speed
-
     public Vector3 _targetPosition;
 
     public Vector3  velocity = Vector3.zero;
