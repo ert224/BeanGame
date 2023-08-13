@@ -185,6 +185,27 @@ public class PlayerHand : NetworkBehaviour
         return Quaternion.identity; // default rotation
     }
 
+    public void PrintCardsInHand()
+    {
+        if (_CardsList == null || _CardsList.Count == 0)
+        {
+            Debug.Log("No cards in hand.");
+            return;
+        }
+
+        Debug.Log("Cards in hand:");
+        foreach (GameObject card in _CardsList)
+        {
+            if (card != null)
+            {
+                Debug.Log(card.name);
+            }
+            else
+            {
+                Debug.Log("A card in the list is null.");
+            }
+        }
+    }
 
 }
 

@@ -1,5 +1,6 @@
 using System;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -40,12 +41,11 @@ public class InputClick : NetworkBehaviour
         if (networkBehaviour.IsOwner)
         {
             Debug.Log("Card and Client Match");
-            var downOffset = rayHit.collider.transform.position - new Vector3(-32, -120, 0);
             Vector3 currPos = rayHit.collider.gameObject.transform.position;
             //ActivateCanvasObj();
             //PlantCardServerRpc(networkBehaviour.NetworkObject.NetworkObjectId, newTarget);
-
-            changeActiveCanvas(networkBehaviour.NetworkObject.NetworkObjectId, currPos, holdID);
+            FindSomeNetworkObjectOnServerServerRpc(holdID);
+            //changeActiveCanvas(networkBehaviour.NetworkObject.NetworkObjectId, currPos, holdID);
         }
     }
 
@@ -84,5 +84,37 @@ public class InputClick : NetworkBehaviour
         }
         return hold;
         //return new Vector3(0f, -115f, 0f); // default rotation
+    }
+
+    [ServerRpc]
+    public void FindSomeNetworkObjectOnServerServerRpc(ulong networkObjectId, ServerRpcParams serverRpcParams = default)
+    {
+        if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(networkObjectId, out NetworkObject netObj))
+        {
+
+            Debug.LogError("Getting Player Hand");
+
+                var playerHand = netObj.gameObject.GetComponent<PlayerHand>();
+                if (playerHand == null)
+                {
+                    Debug.Log("playerHand component is missing");
+                    return;
+                }
+                playerHand.PrintCardsInHand();
+        }
+    }
+    private void GetList(ulong networkObjectId)
+    {
+        Debug.LogError("Getting Player Hand");
+        if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(networkObjectId, out NetworkObject networkObject))
+        {
+            var playerHand = networkObject.gameObject.GetComponent<PlayerHand>();
+            if (playerHand == null)
+            {
+                Debug.Log("playerHand component is missing");
+                return;
+            }
+            playerHand.PrintCardsInHand();
+        }
     }
 }
