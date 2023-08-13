@@ -18,7 +18,14 @@ public class SpawnCard : NetworkBehaviour
     public void SetTargetLocation(Vector3 target)
     {
         _targetPosition = target;
+        increTime = 0; // Resetting the interpolation timer
     }
+    [ServerRpc]
+    public void SetTargetLocationServerRpc(Vector3 target)
+    {
+        SetTargetLocation(target);
+    }
+
 
     private float increTime = 0;
     private void Update()

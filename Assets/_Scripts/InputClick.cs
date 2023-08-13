@@ -8,7 +8,8 @@ public class InputClick : NetworkBehaviour
     private Camera _mainCamera;
     [SerializeField] private GameObject plantfieldObjPrefab; // Reference to your Canvas prefab
     private GameObject plantfieldObjInstance; // Reference to the instantiated Canvas
-
+    private ulong numCoins01 = 0;
+    private ulong numCoins02 = 0;
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
@@ -19,9 +20,9 @@ public class InputClick : NetworkBehaviour
     {
         _mainCamera = Camera.main;
         plantfieldObjInstance = Instantiate(plantfieldObjPrefab);
+
     }
 
-    private Vector3 downOffset = new Vector3(-25, -50, 0);
     private RaycastHit2D rayHit;
 
     public void OnClick(InputAction.CallbackContext context)
@@ -30,58 +31,58 @@ public class InputClick : NetworkBehaviour
         if (!context.started) return;
         rayHit = Physics2D.GetRayIntersection(_mainCamera.ScreenPointToRay((Vector3)Mouse.current.position.ReadValue()));
         if (!rayHit.collider) return;
-
+        Debug.LogError("Owner ID: " + OwnerClientId);
+        var holdID = OwnerClientId;
         Debug.Log("ray hit collider");
         Debug.Log(rayHit.collider.gameObject.name);
         var networkBehaviour = rayHit.collider.gameObject.GetComponent<NetworkBehaviour>();
-        var networkObjectRef = new NetworkObjectReference(rayHit.collider.gameObject);
+        //var networkObjectRef = new NetworkObjectReference(rayHit.collider.gameObject);
         if (networkBehaviour.IsOwner)
         {
             Debug.Log("Card and Client Match");
-            Vector3 newTarget = rayHit.collider.gameObject.transform.position + downOffset;
+            var downOffset = rayHit.collider.transform.position - new Vector3(-237, 33, 0);
+            Vector3 newTarget = rayHit.collider.gameObject.transform.position - downOffset;
             //ActivateCanvasObj();
             //PlantCardServerRpc(networkBehaviour.NetworkObject.NetworkObjectId, newTarget);
-            changeActiveCanvas(networkBehaviour.NetworkObject.NetworkObjectId, newTarget, networkObjectRef);
+
+            changeActiveCanvas(networkBehaviour.NetworkObject.NetworkObjectId, newTarget, holdID);
         }
     }
 
 
-    public void changeActiveCanvas(ulong networkObjectId, Vector3 newTarget, NetworkObjectReference objref)
+    public void changeActiveCanvas(ulong networkObjectId, Vector3 newTarget, ulong cardOwnerID)
     {
         if (plantfieldObjInstance.TryGetComponent(out PlantObjState plantScript))
         {
-            
-            plantScript.ActivateCanvasObj();
-            var networkBehaviour = rayHit.collider.gameObject.GetComponent<NetworkBehaviour>();
 
+            plantScript.ActivateCanvasObj();
             plantScript.SetObjID(networkObjectId);
             plantScript.SetTargetPos(newTarget);
-            plantScript.SetNetworkRef(objref);
-            //PlantCardServerRpc(networkObjectId, newTarget);
+            plantScript.SetCardOwnerID(cardOwnerID);
+
         }
     }
-
-    [ServerRpc]
-    public void PlantCardServerRpc(ulong networkObjectId, Vector3 newTarget)
+    public Vector3 SetCardLocation(ulong player)
     {
-        if (!NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(networkObjectId, out NetworkObject networkObject))
+        Vector3 hold = new Vector3(0f, 0f, 0f);
+        Debug.Log("Network Rsponse");
+        if (player == 0)
         {
-            Debug.Log("NetworkObject not found");
-            return;
+            hold = new Vector3(-60f, -60f, 0f);
         }
-
-        var spawnCard = networkObject.gameObject.GetComponent<SpawnCard>();
-        if (spawnCard == null)
+        else if (player == 1)
         {
-            Debug.Log("SpawnCard component is missing");
-            return;
+            hold = new Vector3(-178f, 60f , 0f);
         }
-
-        Debug.Log("change move move");
-        spawnCard.SetTargetLocation(newTarget);
-        spawnCard.UpdatePlayerPositionServerRpc(newTarget.x, newTarget.y, newTarget.z);
+        else if (player == 2)
+        {
+            hold = new Vector3(-60f, 60f, 0f);
+        }
+        else if (player == 3)
+        {
+            hold = new Vector3(178f, 60f, 0f);
+        }
+        return hold;
+        //return new Vector3(0f, -115f, 0f); // default rotation
     }
-
-
-
 }
