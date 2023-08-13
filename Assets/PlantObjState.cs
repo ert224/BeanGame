@@ -65,7 +65,26 @@ public class PlantObjState : NetworkBehaviour
         Debug.Log(_targetPosition.ToString());
         Debug.Log(objID.ToString());
         Debug.Log(GlobalObjRef);
+        _targetPosition = SetCardLocation01(_targetPosition);
+        Debug.LogError("New target loc");
+        Debug.LogError(_targetPosition.ToString());
         PlantCard(objID, _targetPosition); // here 
+        ActivateCanvasObj();
+    }
+
+    public void RequestPlantBean02()
+    {
+        Debug.LogError("Inside Bean ");
+        Debug.LogError("Owner ID: " + OwnerClientId);
+        Debug.Log(_targetPosition.ToString());
+        Debug.Log(objID.ToString());
+        Debug.Log(GlobalObjRef);
+        _targetPosition = SetCardLocation02(_targetPosition);
+        Debug.LogError("New target loc");
+        Debug.LogError(_targetPosition.ToString());
+        PlantCard(objID, _targetPosition); // here 
+        ActivateCanvasObj();
+
     }
     private void PlantCard(ulong networkObjectId, Vector3 newTarget)
     {
@@ -84,50 +103,49 @@ public class PlantObjState : NetworkBehaviour
             spawnCard.SetTargetLocationServerRpc(newTarget); // Call the new Server RPC here
         }
     }
-    private Vector3 field1 = new Vector3(-237, 33, 0);
-    private Vector3 field2 = new Vector3(-237, -33, 0);
-    public Vector3 SetCardLocation01(ulong player,Vector3 currPos)
+
+    public Vector3 SetCardLocation01(Vector3 currPos)
     {
         Vector3 hold = new Vector3(0f, 0f, 0f);
         Debug.Log("Network Rsponse");
-        if (player == 0)
+        if (cardOwnerID == 0)
+        {
+            hold = currPos - (currPos - new Vector3(-32, -120, 0));
+        }
+        else if (cardOwnerID == 1)
         {
             hold = currPos - (currPos - new Vector3(-237, 33, 0));
         }
-        else if (player == 1)
+        else if (cardOwnerID == 2)
         {
-            hold = currPos - (currPos - new Vector3(-237, 33, 0));
+            hold = currPos - (currPos - new Vector3(-32, 120, 0));
         }
-        else if (player == 2)
+        else if (cardOwnerID == 3)
         {
-            hold = new Vector3(-60f, 60f, 0f);
-        }
-        else if (player == 3)
-        {
-            hold = new Vector3(178f, 60f, 0f);
+            hold = currPos - (currPos - new Vector3(237, -33, 0));
         }
         return hold;
     }
 
-    public Vector3 SetCardLocation02(ulong player, Vector3 currPos)
+    public Vector3 SetCardLocation02( Vector3 currPos)
     {
         Vector3 hold = new Vector3(0f, 0f, 0f);
         Debug.Log("Network Rsponse");
-        if (player == 0)
+        if (cardOwnerID == 0)
         {
-            hold = currPos - (currPos - new Vector3(-237, -33, 0));
+            hold = currPos - (currPos - new Vector3(-237, -32, 0));
         }
-        else if (player == 1)
+        else if (cardOwnerID == 1)
         {
-            hold = currPos - (currPos - new Vector3(-237, -33, 0));
+            hold = currPos - (currPos - new Vector3(-237, -32, 0));
         }
-        else if (player == 2)
+        else if (cardOwnerID == 2)
         {
-            hold = new Vector3(-60f, 60f, 0f);
+            hold = currPos - (currPos - new Vector3(32, 120, 0));
         }
-        else if (player == 3)
+        else if (cardOwnerID == 3)
         {
-            hold = new Vector3(178f, 60f, 0f);
+            hold = currPos - (currPos - new Vector3(237, 33, 0));
         }
         return hold;
     }

@@ -93,6 +93,10 @@ PrefabInstance:
       value: 08RedBean Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4287930444590694260, guid: eccec2ae6af987d41900cc21ccf544ed, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4287930444590694260, guid: eccec2ae6af987d41900cc21ccf544ed, type: 3}
       propertyPath: m_TagString
       value: 08RedTag
       objectReference: {fileID: 0}

@@ -40,12 +40,12 @@ public class InputClick : NetworkBehaviour
         if (networkBehaviour.IsOwner)
         {
             Debug.Log("Card and Client Match");
-            var downOffset = rayHit.collider.transform.position - new Vector3(-237, 33, 0);
-            Vector3 newTarget = rayHit.collider.gameObject.transform.position - downOffset;
+            var downOffset = rayHit.collider.transform.position - new Vector3(-32, -120, 0);
+            Vector3 currPos = rayHit.collider.gameObject.transform.position;
             //ActivateCanvasObj();
             //PlantCardServerRpc(networkBehaviour.NetworkObject.NetworkObjectId, newTarget);
 
-            changeActiveCanvas(networkBehaviour.NetworkObject.NetworkObjectId, newTarget, holdID);
+            changeActiveCanvas(networkBehaviour.NetworkObject.NetworkObjectId, currPos, holdID);
         }
     }
 
