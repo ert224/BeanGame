@@ -24,7 +24,7 @@ Erick Tepan
 - Multiplay
 
 ## Getting Started
-- **Unity Version:** 2023
+- **Unity Version:** 2023.1.5f1
 - **Installation:** Install all packages listed and add any additional required packages
 
 ## License Information
