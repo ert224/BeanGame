@@ -56,14 +56,14 @@ public class PlantObjState : NetworkBehaviour
 
     public void RequestPlantBean()
     {
-        Debug.LogError("Inside Bean ");
-        Debug.LogError("Owner ID: " + OwnerClientId);
-        Debug.Log(_targetPosition.ToString());
-        Debug.Log(objID.ToString());
-        _targetPosition = SetCardLocation01(_targetPosition);
-        Debug.LogError("New target loc");
-        Debug.LogError(_targetPosition.ToString());
-        PlantCard(objID, _targetPosition); // here 
+        //Debug.LogError("Inside Bean ");
+        //Debug.LogError("Owner ID: " + OwnerClientId);
+        //Debug.Log(_targetPosition.ToString());
+        //Debug.Log(objID.ToString());
+        //_targetPosition = SetCardLocation01(_targetPosition);
+        //Debug.LogError("New target loc");
+        //Debug.LogError(_targetPosition.ToString());
+        //PlantCard(objID, _targetPosition); // here 
         ActivateCanvasObj();
     }
 
@@ -78,11 +78,23 @@ public class PlantObjState : NetworkBehaviour
                 Debug.Log("SpawnCard component is missing");
                 return;
             }
-
+            _lastPos = networkObject.transform.position;
             Debug.Log("change move move");
+            Debug.Log(_lastPos);
             //if (!IsOwner) return;
             spawnCard.SetTargetLocationServerRpc(newTarget); // Call the new Server RPC here
         }
+    }
+    Vector3 _lastPos = Vector3.zero;
+
+    public void SetLastPos(Vector3 pos)
+    {
+        _lastPos = pos;
+    }
+    ulong countID=0;
+    public void setCountID(ulong newId)
+    {
+        countID=newId;
     }
     public void RequestPlantBean02()
     {
@@ -90,15 +102,31 @@ public class PlantObjState : NetworkBehaviour
         Debug.LogError("Owner ID: " + OwnerClientId);
         Debug.Log(_targetPosition.ToString());
         Debug.Log(objID.ToString());
+        SetLastPos(_targetPosition);
         _targetPosition = SetCardLocation02(_targetPosition);
         Debug.LogError("New target loc");
         Debug.LogError(_targetPosition.ToString());
         PlantCard(objID, _targetPosition); // here 
+
+        MoveCards(objID, _lastPos);
         ActivateCanvasObj();
 
     }
 
-        public Vector3 SetCardLocation01(Vector3 currPos)
+    public void MoveCards(ulong objId,Vector3 last )
+    {
+        Debug.LogError("Insde Move Card !!!");
+        for (int i = 0;i<4;i++)
+        {
+            Debug.Log("ID: "+i);
+            Debug.Log(_lastPos.ToString());
+            PlantCard(++objID, _lastPos); // here 
+            //PlantCard(objID, _lastPos); // here 
+
+        }
+    }
+
+    public Vector3 SetCardLocation01(Vector3 currPos)
     {
         Vector3 hold = new Vector3(0f, 0f, 0f);
         Debug.Log("Network Rsponse");
