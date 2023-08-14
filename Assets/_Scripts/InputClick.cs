@@ -39,6 +39,11 @@ public class InputClick : NetworkBehaviour
         Debug.Log(rayHit.collider.gameObject.name);
         var networkBehaviour = rayHit.collider.gameObject.GetComponent<NetworkBehaviour>();
         //var networkObjectRef = new NetworkObjectReference(rayHit.collider.gameObject);
+        if("backRectangle"== rayHit.collider.gameObject.name)
+        {
+            Debug.LogError("Clicked on back side");
+            return;
+        }
         if (networkBehaviour.IsOwner)
         {
             Debug.Log("Card and Client Match");

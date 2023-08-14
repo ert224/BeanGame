@@ -66,14 +66,20 @@ public class PlantObjState : NetworkBehaviour
 
     public void RequestPlantBean()
     {
-        //Debug.LogError("Inside Bean ");
-        //Debug.LogError("Owner ID: " + OwnerClientId);
-        //Debug.Log(_targetPosition.ToString());
-        //Debug.Log(objID.ToString());
-        //_targetPosition = SetCardLocation01(_targetPosition);
-        //Debug.LogError("New target loc");
-        //Debug.LogError(_targetPosition.ToString());
-        //PlantCard(objID, _targetPosition); // here 
+        Debug.LogError("Inside Bean ");
+        Debug.LogError("Owner ID: " + OwnerClientId);
+        Debug.Log(_targetPosition.ToString());
+        Debug.Log(objID.ToString());
+        SetLastPos(_targetPosition);
+        _targetPosition = SetCardLocation01(_targetPosition);
+        Debug.LogError("New target loc");
+        Debug.LogError(_targetPosition.ToString());
+        PlantCard(objID, _targetPosition); // here 
+
+        decHand();
+        incPlanted();
+
+        MoveCards(objID, _lastPos);
         ActivateCanvasObj();
     }
 
