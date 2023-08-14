@@ -9,6 +9,8 @@ public class PlantObjState : NetworkBehaviour
 
     private ulong objID;
     private ulong cardOwnerID;
+    private  int cardsPlanted = 0;
+    private int cardsOnHand = 5; 
 
     private Vector3 _targetPosition;
     public override void OnNetworkSpawn()
@@ -17,7 +19,15 @@ public class PlantObjState : NetworkBehaviour
         Debug.LogError("Canvas Starts in the NEBEC!");
         plantfieldObjInstance.SetActive(true);
     }
-    
+
+    private void decHand()
+    {
+        cardsOnHand--;
+    }
+    private void incPlanted()
+    {
+        cardsPlanted++;
+    }
     public void SetCardOwnerID(ulong setID)
     {
         cardOwnerID = setID;
@@ -108,6 +118,9 @@ public class PlantObjState : NetworkBehaviour
         Debug.LogError(_targetPosition.ToString());
         PlantCard(objID, _targetPosition); // here 
 
+        decHand();
+        incPlanted();
+
         MoveCards(objID, _lastPos);
         ActivateCanvasObj();
 
@@ -116,7 +129,10 @@ public class PlantObjState : NetworkBehaviour
     public void MoveCards(ulong objId,Vector3 last )
     {
         Debug.LogError("Insde Move Card !!!");
-        for (int i = 0;i<4;i++)
+        Debug.Log("Cards on Hand: " + cardsOnHand);
+        Debug.Log("Cards Planted: " + cardsPlanted);
+
+        for (int i = 0;i<cardsOnHand;i++)
         {
             Debug.Log("ID: "+i);
             Debug.Log(_lastPos.ToString());

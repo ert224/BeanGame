@@ -21,6 +21,7 @@ public class InputClick : NetworkBehaviour
     {
         _mainCamera = Camera.main;
         plantfieldObjInstance = Instantiate(plantfieldObjPrefab);
+   
 
     }
 
