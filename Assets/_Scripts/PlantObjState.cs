@@ -1,5 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
+using System;
+
 public class PlantObjState : NetworkBehaviour
 {
     [SerializeField] private GameObject plantfieldObjInstance; // Reference to the instantiated Canvas
@@ -9,7 +11,6 @@ public class PlantObjState : NetworkBehaviour
     private ulong cardOwnerID;
 
     private Vector3 _targetPosition;
-    private NetworkObjectReference GlobalObjRef;
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
@@ -32,11 +33,6 @@ public class PlantObjState : NetworkBehaviour
         _targetPosition = newTarget;
         Debug.Log("Set new vect");
         Debug.Log(_targetPosition);
-    }
-    public void SetNetworkRef(NetworkObjectReference objref)
-    {
-        GlobalObjRef = objref;
-        Debug.Log(GlobalObjRef);
     }
     public void ActivateCanvasObj()
     {
@@ -64,7 +60,6 @@ public class PlantObjState : NetworkBehaviour
         Debug.LogError("Owner ID: " + OwnerClientId);
         Debug.Log(_targetPosition.ToString());
         Debug.Log(objID.ToString());
-        Debug.Log(GlobalObjRef);
         _targetPosition = SetCardLocation01(_targetPosition);
         Debug.LogError("New target loc");
         Debug.LogError(_targetPosition.ToString());
@@ -72,20 +67,6 @@ public class PlantObjState : NetworkBehaviour
         ActivateCanvasObj();
     }
 
-    public void RequestPlantBean02()
-    {
-        Debug.LogError("Inside Bean ");
-        Debug.LogError("Owner ID: " + OwnerClientId);
-        Debug.Log(_targetPosition.ToString());
-        Debug.Log(objID.ToString());
-        Debug.Log(GlobalObjRef);
-        _targetPosition = SetCardLocation02(_targetPosition);
-        Debug.LogError("New target loc");
-        Debug.LogError(_targetPosition.ToString());
-        PlantCard(objID, _targetPosition); // here 
-        ActivateCanvasObj();
-
-    }
     private void PlantCard(ulong networkObjectId, Vector3 newTarget)
     {
         Debug.LogError("Inside pLants server");
@@ -103,8 +84,21 @@ public class PlantObjState : NetworkBehaviour
             spawnCard.SetTargetLocationServerRpc(newTarget); // Call the new Server RPC here
         }
     }
+    public void RequestPlantBean02()
+    {
+        Debug.LogError("Inside Bean ");
+        Debug.LogError("Owner ID: " + OwnerClientId);
+        Debug.Log(_targetPosition.ToString());
+        Debug.Log(objID.ToString());
+        _targetPosition = SetCardLocation02(_targetPosition);
+        Debug.LogError("New target loc");
+        Debug.LogError(_targetPosition.ToString());
+        PlantCard(objID, _targetPosition); // here 
+        ActivateCanvasObj();
 
-    public Vector3 SetCardLocation01(Vector3 currPos)
+    }
+
+        public Vector3 SetCardLocation01(Vector3 currPos)
     {
         Vector3 hold = new Vector3(0f, 0f, 0f);
         Debug.Log("Network Rsponse");
@@ -133,7 +127,7 @@ public class PlantObjState : NetworkBehaviour
         Debug.Log("Network Rsponse");
         if (cardOwnerID == 0)
         {
-            hold = currPos - (currPos - new Vector3(-237, -32, 0));
+            hold = currPos - (currPos - new Vector3(32, -120, 0));
         }
         else if (cardOwnerID == 1)
         {

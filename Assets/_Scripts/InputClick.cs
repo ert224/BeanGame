@@ -9,8 +9,8 @@ public class InputClick : NetworkBehaviour
     private Camera _mainCamera;
     [SerializeField] private GameObject plantfieldObjPrefab; // Reference to your Canvas prefab
     private GameObject plantfieldObjInstance; // Reference to the instantiated Canvas
-    private ulong numCoins01 = 0;
-    private ulong numCoins02 = 0;
+    //private ulong numCoins01 = 0;
+    //private ulong numCoins02 = 0;
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
@@ -42,10 +42,9 @@ public class InputClick : NetworkBehaviour
         {
             Debug.Log("Card and Client Match");
             Vector3 currPos = rayHit.collider.gameObject.transform.position;
-            //ActivateCanvasObj();
             //PlantCardServerRpc(networkBehaviour.NetworkObject.NetworkObjectId, newTarget);
-            FindSomeNetworkObjectOnServerServerRpc(holdID);
-            //changeActiveCanvas(networkBehaviour.NetworkObject.NetworkObjectId, currPos, holdID);
+            changeActiveCanvas(networkBehaviour.NetworkObject.NetworkObjectId, currPos, holdID);
+           // GetPlayerCardsServerRpc(networkBehaviour.NetworkObject.NetworkObjectId, holdID);
         }
     }
 
@@ -83,38 +82,24 @@ public class InputClick : NetworkBehaviour
             hold = new Vector3(178f, 60f, 0f);
         }
         return hold;
-        //return new Vector3(0f, -115f, 0f); // default rotation
     }
 
     [ServerRpc]
-    public void FindSomeNetworkObjectOnServerServerRpc(ulong networkObjectId, ServerRpcParams serverRpcParams = default)
+    public void GetPlayerCardsServerRpc(ulong networkObjectId, ulong cardOwnerID, ServerRpcParams serverRpcParams = default)
     {
-        if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(networkObjectId, out NetworkObject netObj))
+        Debug.LogError("Getting Player Hand " + cardOwnerID);
+        if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(cardOwnerID, out NetworkObject netObj))
         {
-
-            Debug.LogError("Getting Player Hand");
-
-                var playerHand = netObj.gameObject.GetComponent<PlayerHand>();
-                if (playerHand == null)
-                {
-                    Debug.Log("playerHand component is missing");
-                    return;
-                }
-                playerHand.PrintCardsInHand();
-        }
-    }
-    private void GetList(ulong networkObjectId)
-    {
-        Debug.LogError("Getting Player Hand");
-        if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(networkObjectId, out NetworkObject networkObject))
-        {
-            var playerHand = networkObject.gameObject.GetComponent<PlayerHand>();
+            var playerHand = netObj.gameObject.GetComponent<PlayerHand>();
             if (playerHand == null)
             {
                 Debug.Log("playerHand component is missing");
                 return;
             }
             playerHand.PrintCardsInHand();
+            Debug.LogError("New printing index");
+            //playerHand.GetIndex(cardId);
+
         }
     }
 }

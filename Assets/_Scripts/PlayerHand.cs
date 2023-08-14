@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
@@ -125,7 +126,66 @@ public class PlayerHand : NetworkBehaviour
         }
     }
 
+    public void PrintCardsInHand()
+    {
+        Debug.LogError("Cards in hand:");
+        if (_CardsList == null || _CardsList.Count == 0)
+        {
+            Debug.Log("No cards in hand.");
+            return;
+        }
 
+        foreach (GameObject card in _CardsList)
+        {
+            if (card != null)
+            {
+                Debug.Log(card.name);
+            }
+            else
+            {
+                Debug.Log("A card in the list is null.");
+            }
+        }
+    }
+
+    [ClientRpc]
+    public void PrintCardsInHandClientRpc()
+    {
+        //if (!IsServer) return;
+        PrintCardsInHand();
+    }
+
+
+    //public void moveRemCards(ulong index)
+    //{
+    //    Debug.LogError("New Index print hand:");
+    //    if (_CardsList == null || _CardsList.Count == 0)
+    //    {
+    //        Debug.Log("No cards in hand.");
+    //        return;
+    //    }
+
+    //    for (int i = Convert.ToInt32(index); i < _CardsList.Count; i++)
+    //    {
+    //        GameObject card = _CardsList[i];
+    //        if (card != null)
+    //        {
+    //            Debug.Log(card.name);
+    //        }
+    //        else
+    //        {
+    //            Debug.Log("A card in the list is null.");
+    //        }
+    //    }
+    //}
+
+
+
+
+
+    /// <summary>
+    /// ////////////
+    /// </summary>
     private ulong CountRot = 0;
     public Vector3 SetCardLocation(ulong player)
     {
@@ -183,28 +243,6 @@ public class PlayerHand : NetworkBehaviour
         // You can return a default rotation, log an error, throw an exception, etc.
         Debug.Log("Invalid player value for GetPlayerRotation: " + player);
         return Quaternion.identity; // default rotation
-    }
-
-    public void PrintCardsInHand()
-    {
-        if (_CardsList == null || _CardsList.Count == 0)
-        {
-            Debug.Log("No cards in hand.");
-            return;
-        }
-
-        Debug.Log("Cards in hand:");
-        foreach (GameObject card in _CardsList)
-        {
-            if (card != null)
-            {
-                Debug.Log(card.name);
-            }
-            else
-            {
-                Debug.Log("A card in the list is null.");
-            }
-        }
     }
 
 }
